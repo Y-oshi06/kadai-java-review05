@@ -6,39 +6,32 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Review05 {
 
     public static void main(String[] args) {
-        // 3. データベース接続と結果取得のための変数宣言
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-            // 1. ドライバのクラスをJava上で読み込む
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // 2. DBと接続する
             con = DriverManager.getConnection(
                     "jdbc:mysql://localhost/kadaidb?useSSL=false&allowPublicKeyRetrieval=true",
                     "root",
                     "228022yty");
 
-            // 4. DBとやりとりする窓口（Statementオブジェクト）の作成
             String sql ="SELECT * FROM person WHERE id = ?";
             pstmt = con.prepareStatement(sql);
 
-            // 5, 6. Select文の実行と結果を格納／代入
+
             System.out.print("id番号を入力してください > ");
             int input = keyInNum();
 
             pstmt.setInt(1,input);
             rs = pstmt.executeQuery();
 
-
-            // 7. 結果を表示する
             while (rs.next()) {
 
                 String name = rs.getString("name");
@@ -55,7 +48,7 @@ public class Review05 {
             System.err.println("データベースに異常が発生しました。");
             e.printStackTrace();
         } finally {
-            // 8. 接続を閉じる
+
             if (rs != null) {
                 try {
                     rs.close();
